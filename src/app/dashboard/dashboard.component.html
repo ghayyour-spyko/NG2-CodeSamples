@@ -1,0 +1,82 @@
+<div class="container-fluid no-breadcrumbs page-dashboard">
+  <popup #popup1 class="big-modal">
+    <div class="overlay"></div>
+    <span class="close-icon" (click)="hidePopup1()">
+      <i class="material-icons">close</i>
+    </span>
+    <table class="mdl-data-table col-sm-12 table-striped">
+      <thead>
+        <tr>
+          <th>Res ID</th>
+          <th>Customer Name</th>
+          <th>Arriving</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="3">
+            <h4 class="text-center">Arriving</h4>
+          </td>
+        </tr>
+        <tr *ngFor="let tmpRec of oneDayData.arriving; let i = index; trackBy: trackByFn">
+          <td>
+            {{tmpRec.reservation_id}}
+          </td>
+          <td>
+            {{tmpRec.name}}
+          </td>
+          <td>
+            {{tmpRec.time}}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <h4 class="text-center">Leaving</h4>
+          </td>
+        </tr>
+        <tr *ngFor="let tmpRec of oneDayData.leaving; let i = index; trackBy: trackByFn">
+          <td>
+            {{tmpRec.reservation_id}}
+          </td>
+          <td>
+            {{tmpRec.name}}
+          </td>
+          <td>
+            {{tmpRec.time}}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <h4 class="text-center">Parking</h4>
+          </td>
+        </tr>
+        <tr *ngFor="let tmpRec of oneDayData.parked; let i = index; trackBy: trackByFn">
+          <td>
+            {{tmpRec.reservation_id}}
+          </td>
+          <td>
+            {{tmpRec.name}}
+          </td>
+          <td>
+            {{tmpRec.time}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </popup>
+  <div class="box box-default">
+    <div class="box-body">
+      <div class="row">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-6 text-right">
+          <button class="btn-w-xs mat-raised-button mat-primary" (click)="getWeekData()" [ngClass]="{'mat-accent': period=='weekly'}">7 days</button>
+          <button class="btn-w-xs mat-raised-button mat-primary" [ngClass]="{'mat-accent': period=='monthly'}" (click)="getMonthlyData()">30 days</button>
+        </div>
+        <div class="col-sm-12">
+          <chart [options]="options2" style="width:100% !important;"></chart>
+        </div>
+      </div>
+      <!-- <div myECharts [EChartsOptions]="bar2" style="height: 450px;"></div> -->
+    </div>
+  </div>
+</div>

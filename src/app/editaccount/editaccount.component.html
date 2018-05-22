@@ -1,0 +1,41 @@
+<section class="container-fluid with-maxwidth chapter">
+
+  <article class="article">
+    <h2 class="article-title">Change Password</h2>
+    <div class="box box-default">
+      <div class="box-body">
+
+        <form [formGroup]="validationForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <md-input-container class="full-width">
+              <input mdInput formControlName="oldpassword" [(ngModel)]="oldpassword" placeholder="Old Password" type="password">
+            </md-input-container>
+          </div>
+          <div class="form-group">
+            <md-input-container class="full-width">
+              <input mdInput formControlName="npassword" [(ngModel)]="npassword" type="password" placeholder="New Password" >
+            </md-input-container>
+          </div>
+          <div class="form-group">
+            <md-input-container class="full-width">
+              <input mdInput formControlName="cnpassword" [(ngModel)]="cnpassword" type="password" placeholder="Confirm New Password">
+              <div class='form-text error' *ngIf="validationForm.controls.cnpassword.touched">
+                <div class="text-danger" *ngIf="validationForm.hasError('mismatchedPasswords')">Passwords do not match.</div>
+              </div>
+            </md-input-container>
+          </div>
+          <div class="divider divider-md"></div>
+          <button md-raised-button type="submit" class="btn-w-md" color="primary" [disabled]="!validationForm.valid">Submit</button>
+          <span class="space space-md"></span>
+          <!-- <button md-raised-button type="button" class="btn-w-md" (click)="onResetForm()">Reset</button> -->
+        </form>
+        <div *ngIf="formSubmitted">
+          <div class="callout callout-success">
+            <p>You have successfully submit the form :)</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </article>
+</section>

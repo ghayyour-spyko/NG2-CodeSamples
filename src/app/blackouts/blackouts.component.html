@@ -1,0 +1,130 @@
+<section class="container-fluid with-maxwidth chapter">
+  <article class="article">
+    <div class="box box-default">
+      <div class="box-body padding-xl">
+
+        <form role="form" name="updateSlots" [formGroup]="updateSlots" (ngSubmit)="updateMaxSlots()">
+          <div class="form-group row">
+            <label for="inputEmail3" class="col-md-2 control-label">Max Slots</label>
+            <div class="col-md-3 col-sm-4">
+              <input type="text" class="form-control" id="inputEmail3" formControlName="maxSlots" [(ngModel)]="maxSlots" name="maxslot" placeholder="">
+            </div>
+            <div class="col-sm-2">
+              <button md-raised-button color="primary" class="btn-w-md no-margin-left" type="submit">Update</button>
+            </div>
+            <div class="col-md-12 col-lg-12">
+                <label>
+                  <i class="nav-icon material-icons">info</i>
+                  <span class="space space-md"></span>
+                  Total # of parking spots available for Got Parking customers
+                </label>
+            </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-sm-12">
+            <h3>Current Blackouts</h3>
+          </div>
+        </div>
+        <div class="row  margin-top30">
+          <div class="col-sm-12">
+            <table class="mdl-data-table col-sm-12 table-striped">
+              <thead>
+                <tr>
+                  <th class="mdl-data-table__cell--non-numeric">Name</th>
+                  <th class="mdl-data-table__cell--non-numeric">Type</th>
+                  <th class="mdl-data-table__cell--non-numeric">Start Date</th>
+                  <th class="mdl-data-table__cell--non-numeric">End Date</th>
+                  <th class="mdl-data-table__cell--non-numeric"># Cars</th>
+                  <th class="mdl-data-table__cell--non-numeric">Overide</th>
+                  <th class="mdl-data-table__cell--non-numeric">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let blackout of blackouts; let i = index; trackBy: trackByFn">
+                  <td class="mdl-data-table__cell--non-numeric">
+                    {{blackout.product}}
+                  </td>
+                  <td class="mdl-data-table__cell--non-numeric">
+                    {{blackout.type}}
+                  </td>
+                  <td class="mdl-data-table__cell--non-numeric">
+                    {{blackout.startDate | date: 'yMMMd'}}
+                  </td>
+                  <td class="mdl-data-table__cell--non-numeric">
+                    {{blackout.endDate | date: 'yMMMd'}}
+                  </td>
+                  <td class="mdl-data-table__cell--non-numeric">
+                    {{blackout.numberOfCars}}
+                  </td>
+                  <td class="mdl-data-table__cell--non-numeric">
+                    {{blackout.overrideDays}}
+                  </td>
+                  <td class="numeric">
+                    <i aria-hidden="true" class=" del-option material-icons form-line-height del-option" (click)="deleteBlackout(i, blackout)">
+                    indeterminate_check_box</i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="text-center margin-top30">
+          <button class="btn-w-lg mat-raised-button mat-accent" color="accent" md-raised-button="" (click)="showPopup1()" ng-reflect-color="accent">
+          Add Blackout
+        </button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <popup #popup1 (confirmClick)="addBlackout()">
+    <div class="overlay"></div>
+    <div class="form-group">
+      <label for="">Product</label>
+      <input [ngModel]="service" name="service" (ngModelChange)="service=$event" type="text" class="form-control" id="" aria-describedby="helpId"
+        placeholder="Enter Label">
+    </div>
+    <div class="form-group">
+      <label for="">Type</label>
+      <select class="form-control" id="" placeholder="Type" [(ngModel)]="type" name="type">
+        <option value="1">Check In</option>
+        <option value="2">Check Out</option>
+        <option value="3">Block All</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="">Start Date</label>
+      <div class="row">
+        <div class="col-sm-10">
+          <input type="text" [(ngModel)]="start_date" name="start_date" readonly class="form-control" [mdDatepicker]="picker" >
+        </div>
+        <div class="col-sm-2">
+          <button mdSuffix [mdDatepickerToggle]="picker"></button>
+          <md-datepicker #picker></md-datepicker>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">End Date</label>
+      <div class="row">
+        <div class="col-sm-10">
+          <input type="text" [(ngModel)]="end_date" name="end_date" readonly class="form-control" [mdDatepicker]="picker2" >
+        </div>
+        <div class="col-sm-2">
+          <button mdSuffix [mdDatepickerToggle]="picker2"></button>
+          <md-datepicker #picker2 ></md-datepicker>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Cars</label>
+      <input [ngModel]="cars" name="cars" (ngModelChange)="cars=$event" type="text" class="form-control" id="" aria-describedby="helpId"
+        placeholder="Cars">
+    </div>
+    <div class="form-group">
+      <label for="">Overide Days</label>
+      <input [ngModel]="overide" name="overide" (ngModelChange)="overide=$event" type="number" class="form-control" id="" aria-describedby="helpId"
+        placeholder="Enter Percentage">
+    </div>
+  </popup>
+</section>

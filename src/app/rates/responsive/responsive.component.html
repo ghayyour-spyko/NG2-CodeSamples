@@ -1,0 +1,188 @@
+<section class="container-fluid with-maxwidth chapter">
+  <article class="article">
+    <div class="box box-default">
+      <div class="box-body padding-xl">
+
+        <form role="form">
+          <div class="form-group row">
+            <label for="inputEmail3" class="col-md-2 control-label">Daily Rate</label>
+            <div class="col-md-1 col-sm-1 text-right">$</div>
+            <div class="col-md-3 col-sm-11">
+              <input type="text" class="form-control" id="inputEmail3" placeholder="Rate" [(ngModel)]="ratesObj.dailyRate" name="dailyRate">
+            </div>
+            <div class="col-md-6">
+              <i class="nav-icon material-icons">info</i> <label>price to charge per day</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword3" class="col-md-2 control-label">Grace Period</label>
+            <div class="col-md-3 offset-md-1">
+              <input type="text" class="form-control" id="inputPassword3" placeholder="Hours" [(ngModel)]="ratesObj.gracePeriod" name="gracePeriod">
+            </div>
+            <div class="col-md-6">
+              <i class="material-icons">info</i> <label class="label"> Hours to wait until counting a new way</label>
+            </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col-sm-3">
+            <h3>Taxes</h3>
+          </div>
+          <div class="col-sm-9 margin-top30">
+            <div class="row">
+              <div class="col-sm-2 text-center">
+                <i class="nav-icon material-icons margin-top10">info</i>
+              </div>
+              <div class="col-sm-10">
+                <label>Add in taxes that apply to your lot. Taxes are always % of parking sub-total. If you need other types of taxes contact us.</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row  margin-top30">
+          <div class="col-sm-12">
+            <table class="mdl-data-table col-sm-8 table-striped">
+              <thead>
+                <tr>
+                  <th class="mdl-data-table__cell--non-numeric">Label</th>
+                  <th class="mdl-data-table__cell--non-numeric">Percentage</th>
+                  <th class="mdl-data-table__cell--non-numeric"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tax of ratesObj.taxes; let i = index; trackBy: trackByFn"  >
+                  <td class="mdl-data-table__cell--non-numeric">
+                    <input type="text" class="form-control" id="label" name="label" [ngModel]="tax.label" placeholder="Tax Label">
+                  </td>
+                  <td class="mdl-data-table__cell--non-numeric">
+                    <div class="row">
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="percentage" [ngModel]="tax.percentage" id="percentage" placeholder="Amount">
+                      </div>
+                      <div class="col-sm-1 form-line-height">%</div>
+                    </div>
+                  </td>
+                  <td class="mdl-data-table__cell--non-numeric">
+                    <i class="del-option material-icons form-line-height" aria-hidden="true" (click)="remTax(i)">indeterminate_check_box</i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-12 margin-top20">
+            <button md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="showPopup1()">Add Tax</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <h3>Fees</h3>
+          </div>
+          <div class="col-sm-9 margin-top30">
+            <div class="row">
+              <div class="col-sm-2 text-center">
+                <i class="nav-icon material-icons margin-top10">info</i>
+              </div>
+              <div class="col-sm-10">
+                <label>Daily fees apply per billable day. Fixed fees are the same regardless of billable days. Amounts can either be percentage of parking sub-total or a fixed amount.</label>
+              </div>
+            </div>
+          </div>
+          <div class="box box-default table-box table-responsive mdl-shadow--2dp col-sm-12">
+            <table class="mdl-data-table table-bordered table-striped cf margin-top30 col-sm-12">
+              <thead class="cf">
+                <tr>
+                  <th class="text-left">Label</th>
+                  <th class="text-left">Bill Type(Daily/Fixed)</th>
+                  <th class="text-left">Amount Type(%/Fixed)</th>
+                  <th class="text-left">Value</th>
+                  <th class="text-left">Taxable</th>
+                  <th class="text-left"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let fee of ratesObj.fees; let j = index; trackBy: trackByFn" >
+                  <td><input type="text" class="form-control" id="inputEmail3" placeholder="City Tax" value="{{fee.label}}"></td>
+                  <td class="numeric">
+                    <select class="form-control" id="inputEmail3" placeholder="City Tax" value="{{fee.billType}}">
+                      <option value="one-time">One-time</option>
+                      <option value="Daily">Daily</option>
+                    </select>
+                  </td>
+                  <td class="numeric">
+                    <select class="form-control" id="inputEmail3" placeholder="City Tax" value="{{fee.category}}">
+                      <option value="percentange">Percentage (%)</option>
+                      <option value="one-time">One Time</option>
+                    </select>
+                  </td>
+                  <td class="numeric">
+                    <input type="text" class="form-control" id="inputEmail3" placeholder="6.66" value="{{fee.value}}">
+                  </td>
+                  <td class="numeric">
+                    <md-slide-toggle [checked]="fee.taxable" ></md-slide-toggle>
+                  </td>
+                  <td class="numeric">
+                    <i class=" del-option material-icons form-line-height del-option" aria-hidden="true" (click)="remFee(j)">indeterminate_check_box</i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-12 margin-top20">
+            <button md-raised-button color="primary" class="btn-w-md no-margin-left" (click)="showPopup2()">Add Fees</button>
+          </div>
+        </div>
+        <div class="text-center margin-top30">
+          <button class="btn-w-lg mat-raised-button mat-accent" color="accent" md-raised-button="" ng-reflect-color="accent" (click)="saveData()">
+          Save All Changes
+        </button>
+        </div>
+      </div>
+    </div>
+  </article>
+  <popup #popup1 (confirmClick)="saveTax()">
+    <div class="form-group">
+      <label for="">Label</label>
+      <input [ngModel]="taxLabel" name="taxLabel"  (ngModelChange)="taxLabel=$event" type="text" class="form-control" id="" aria-describedby="helpId" placeholder="Enter Label" >
+    </div>
+    <div class="form-group">
+      <label for="">Percentage</label>
+      <input [ngModel]="taxValue" name="taxValue"  (ngModelChange)="taxValue=$event" type="number" class="form-control"  id="" aria-describedby="helpId" placeholder="Enter Percentage" >
+    </div>
+  </popup>
+
+  <popup #popup2 (confirmClick)="saveFee()">
+    <div class="overlay"></div> 
+    <div class="form-group">
+      <label for="">Label</label>
+      <input [ngModel]="feeLabel" name="feeLabel"  (ngModelChange)="feeLabel=$event" type="text" class="form-control" id="" aria-describedby="helpId" placeholder="Enter Label" >
+    </div>
+    <div class="form-group">
+      <label for="">Bill Type </label>
+      <select class="form-control" id="inputEmail3" placeholder="Bill Type" [ngModel]="feeBillType" name="feeBillType"  (ngModelChange)="feeBillType=$event">
+        <option value="one-time">One Time</option>
+        <option value="Daily">Daily</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="">Account Type</label>
+      <select class="form-control" id="inputEmail3" placeholder="Account Type" [ngModel]="feeAmountType" name="feeAmountType"  (ngModelChange)="feeAmountType=$event">
+        <option value="percentange">Percentage (%)</option>
+        <option value="Fixed">Fixed</option>
+      </select>
+    </div>    
+    <div class="form-group">
+      <label for="">Percentage</label>
+      <input [ngModel]="feeValue" name="feeValue"  (ngModelChange)="feeValue=$event" type="number" class="form-control"  id="" aria-describedby="helpId" placeholder="Enter Percentage" >
+    </div>
+    <div class="form-group">
+        <label for="">Taxable</label>
+        <div>
+          <md-slide-toggle checked="taxable"  (change)="onChange($event)" (ngModelChange)="taxable=$event"></md-slide-toggle>
+        </div>
+      </div>
+  </popup>
+</section>

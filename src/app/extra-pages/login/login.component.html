@@ -1,0 +1,49 @@
+<div class="page-auth">
+  <div class="main-body">
+    <div class="card card-white">
+      <div class="card-content">
+        <!-- <div class="logo"></div> -->
+        <h2 class="text-center">
+          GotParking.com<br>Partner Login
+        </h2>
+        <form name="LoginForm" [formGroup]="LoginForm" (ngSubmit)="loginSubmit()">
+          <fieldset>
+            <div class="form-group">
+              <md-input-container class="full-width md-icon-left">
+                <md-icon class="material-icons">mail_outline</md-icon>
+                <input mdInput formControlName="username" [(ngModel)]="username" type="text" name="username" placeholder="Username">
+              </md-input-container>
+              <div class="form-text error" *ngIf="LoginForm.controls.username.touched && !LoginForm.controls.username.valid">
+                <p class="text-danger">Email must be valid</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <md-input-container class="full-width md-icon-left">
+                <md-icon class="material-icons">lock_outline</md-icon>
+                <input mdInput type="password" name="pass" formControlName="pass" [(ngModel)]="pass" placeholder="Password">
+              </md-input-container>
+              <div class="form-text error" *ngIf="LoginForm.controls.pass.touched && !LoginForm.controls.pass.valid">
+                <p class="text-danger">Password must be 5 character long</p>
+              </div>
+            </div>
+            <div class="text-center">
+              <!-- <button (click)="loginSubmit()" md-raised-button type="button" color="primary" class="btn-w-md">Login</button> -->
+              <button (click)="loginSubmit()" type="submit" md-raised-button type="button" color="primary" [disabled]="!LoginForm.valid"
+                class="btn-w-md">Login</button>
+            </div>
+          </fieldset>
+          <!-- <div class="callout callout-info" *ngIf="!LoginForm.valid">
+            <p>Submit button will be active only when all fields are valid.</p>
+          </div> -->
+        </form>
+
+        <div class="additional-info">
+          <!-- <a [routerLink]="['/extra/sign-up']">Sign up</a>
+          <span class="divider-h"></span> -->
+          <a [routerLink]="['/forgot-password']">Forgot your password?</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
